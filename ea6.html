@@ -1,0 +1,51 @@
+<!doctype html>
+
+<html class="no-js" lang="de">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Objekte bewegen - fliegende Kugeln</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+
+  <body onload="app.start()">
+    <h1>Kamerabewegung</h1>
+    <canvas id="ea6-canvas" width="1000" height="500"></canvas>
+    <p>Steuerung: K = Animation</p>
+    <p><a href="index.html"><img src="img/home.png" alt="Graphical Visualisation Technologies" width="50"
+                                 height="50"></a></p>
+    <script src="js/vendor/gl-matrix.js"></script>
+    <script src="js/model/sphere.js"></script>
+    <script src="js/model/torus.js"></script>
+    <script src="js/model/plane.js"></script>
+    <script src="js/ea6.js"></script>
+    <script type="x-shader/x-vertex" id="vertexshader">
+			attribute vec3 aPosition;
+			attribute vec3 aNormal;
+			uniform mat4 uPMatrix;
+			uniform mat4 uMVMatrix;
+			uniform mat3 uNMatrix;
+			varying vec4 vColor;
+			uniform vec4 uColor;
+
+			void main(){
+			    gl_Position = uPMatrix * uMVMatrix * vec4(aPosition, 1.0);
+			    vec3 tNormal = uNMatrix * aNormal;
+			    vColor = vec4(tNormal.z, tNormal.z, tNormal.z, 1.0);
+			    vColor = uColor * (vColor + 1.0) / 2.0;
+			}
+
+    </script>
+    <script type="x-shader/x-fragment" id="fragmentshader">
+			precision mediump float;
+			varying vec4 vColor;
+
+			void main() {
+			    gl_FragColor = vColor;
+			}
+
+    </script>
+  </body>
+
+</html>

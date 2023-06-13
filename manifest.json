@@ -1,0 +1,15 @@
+{
+  "name": "Graphical Visualisation Technologies",
+  "short_name": "Gravistex",
+  "description": "Lektionen des Modules Graphical Visualisation Technologies",
+  "lang": "de-de",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#222222",
+  "theme_color": "#222222",
+  "icons": [{
+    "src": "icon.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  }]
+}
