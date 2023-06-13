@@ -10,13 +10,15 @@
   </head>
 
   <body onload="app.start()">
-    <h1>Kamerabewegung</h1>
-    <label for="depth">Tiefe: </label>
-    <input id="depth" value="0" min="0" max="5" type="number" onchange="app.start()">
-    <br>
-    <canvas id="ea5-canvas" width="1000" height="500"></canvas>
-    <p>Steuerung: W = Hoch, A = Links, S = Runter, D = Rechts, O = Ortho, P = Perspective F = Frustum</p>
-    <p><a href="index.html"><img src="img/home.png" alt="Graphical Visualisation Technologies"></a></p>
+    <div id="view">
+      <canvas id="ea5-canvas" class="fullscreen"></canvas>
+    </div>
+    <div id="ui">
+      <label for="depth">Tiefe: </label>
+      <input id="depth" value="0" min="0" max="5" type="number" onchange="app.start()">
+      <br>
+      <p>Steuerung: W = Hoch, A = Links, S = Runter, D = Rechts, O = Ortho, P = Perspective F = Frustum</p>
+    </div>
     <script src="js/vendor/gl-matrix.js"></script>
     <script src="js/model/ea5-torus.js"></script>
     <script src="js/model/ea5-cone.js"></script>
@@ -24,6 +26,7 @@
     <script src="js/model/ea5-sphere.js"></script>
     <script src="js/model/ea5-recursive-sphere.js"></script>
     <script src="js/model/plane.js"></script>
+    <script src="js/webgl-utils.js"></script>
     <script src="js/ea5.js"></script>
     <script type="x-shader/x-vertex" id="vertexshader">
 			attribute vec3 aPosition;

@@ -10,15 +10,17 @@
   </head>
 
   <body onload="app.start()">
-    <h1>Z-Buffer Visualisierung</h1>
-    <canvas id="ea7-canvas" width="500" height="500"></canvas>
-    <p>Steuerung: W = Hoch, A = Links, S = Runter, D = Rechts, O = Ortho, P = Perspective F = Frustum</p>
-    <p><a href="index.html"><img src="img/home.png" alt="Graphical Visualisation Technologies" width="50"
-                                 height="50"></a></p>
+    <div id="view">
+      <canvas id="ea7-canvas" class="fullscreen"></canvas>
+    </div>
+    <div id="ui">
+      <p>Steuerung: W = Hoch, A = Links, S = Runter, D = Rechts, O = Ortho, P = Perspective F = Frustum</p>
+    </div>
     <script src="js/vendor/gl-matrix.js"></script>
     <script src="js/model/sphere.js"></script>
     <script src="js/model/torus.js"></script>
     <script src="js/model/plane.js"></script>
+    <script src="js/webgl-utils.js"></script>
     <script src="js/ea7.js"></script>
     <script type="x-shader/x-vertex" id="vertexshader">
                 precision mediump float;

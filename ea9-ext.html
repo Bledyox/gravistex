@@ -10,14 +10,16 @@
   </head>
 
   <body onload="app.start()">
-    <h1>Torustextur</h1>
-    <canvas id="ea9-canvas" width="500" height="500"></canvas>
-    <p><b>Steuerung:</b> Bewegung des Torus mit X-, Y- und Z-Taste</p>
-    <button type="button" onclick="window.location.href='ea9.html'">Bildtextur</button>
-    <br>
-    <p><a href="index.html"><img src="img/home.png" alt="Graphical Visualisation Technologies"></a></p>
+    <div id="view">
+      <canvas id="ea9-canvas" class="fullscreen"></canvas>
+    </div>
+    <div id="ui">
+      <p><b>Steuerung:</b> Bewegung des Torus mit X-, Y- und Z-Taste</p>
+      <button type="button" onclick="window.location.href='ea9.html'">Bildtextur</button>
+    </div>
     <script src="js/vendor/gl-matrix.js"></script>
     <script src="js/model/ea9-torus.js"></script>
+    <script src="js/webgl-utils.js"></script>
     <script src="js/ea9.js"></script>
     <script type="x-shader/x-vertex" id="vertexshader">
 		attribute vec3 aPosition;

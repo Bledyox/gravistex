@@ -54,7 +54,7 @@ const app = (function () {
   }
 
   function init() {
-    initWebGL();
+    gl = webglUtils.getContext('ea9-canvas');
     initShaderProgram();
     initUniforms();
     initModels();
@@ -62,20 +62,12 @@ const app = (function () {
     initPipline();
   }
 
-  function initWebGL() {
-    // Get canvas and WebGL context.
-    canvas = document.getElementById('ea9-canvas');
-    gl = canvas.getContext('experimental-webgl');
-    gl.viewportWidth = canvas.width;
-    gl.viewportHeight = canvas.height;
-  }
-
   /**
    * Init pipeline parmters that will not change again. If projection or
    * viewport change, thier setup must be in render function.
    */
   function initPipline() {
-    gl.clearColor(1, 1, 1, 1);
+    gl.clearColor(0, 0, 0, 0);
 
     // Backface culling.
     gl.frontFace(gl.CCW);
@@ -98,36 +90,14 @@ const app = (function () {
   }
 
   function initShaderProgram() {
-    // Init vertex shader.
-    const vs = initShader(gl.VERTEX_SHADER, "vertexshader");
-    // Init fragment shader.
-    const fs = initShader(gl.FRAGMENT_SHADER, "fragmentshader");
-    // Link shader into a shader program.
-    prog = gl.createProgram();
-    gl.attachShader(prog, vs);
-    gl.attachShader(prog, fs);
+    const vs = document.getElementById("vertexshader").text;
+    const fs = document.getElementById("fragmentshader").text;
+    prog = webglUtils.createProgram(
+      gl,
+      webglUtils.compileShader(gl, vs, gl.VERTEX_SHADER),
+      webglUtils.compileShader(gl, fs, gl.FRAGMENT_SHADER),
+    );
     gl.bindAttribLocation(prog, 0, "aPosition");
-    gl.linkProgram(prog);
-    gl.useProgram(prog);
-  }
-
-  /**
-   * Create and init shader from source.
-   *
-   * @parameter shaderType: openGL shader type.
-   * @parameter SourceTagId: Id of HTML Tag with shader source.
-   * @returns shader object.
-   */
-  function initShader(shaderType, SourceTagId) {
-    const shader = gl.createShader(shaderType);
-    const shaderSource = document.getElementById(SourceTagId).text;
-    gl.shaderSource(shader, shaderSource);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.log(SourceTagId + ": " + gl.getShaderInfoLog(shader));
-      return null;
-    }
-    return shader;
   }
 
   function initUniforms() {

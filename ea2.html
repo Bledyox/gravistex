@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
 
-  <body onload="main()">
-    <h1>2D Geometrie aus Linien</h1>
-    <canvas id="ea2-canvas" width="500" height="500"></canvas>
-    <p><a href="index.html"><img src="img/home.png" alt="Graphical Visualisation Technologies"></a></p>
+  <body onload="app.start()">
+    <div id="view">
+      <canvas id="ea2-canvas" class="fullscreen" style="filter: invert()"></canvas>
+    </div>
+    <script src="js/webgl-utils.js"></script>
     <script src="js/ea2.js"></script>
   </body>
 

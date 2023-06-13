@@ -10,70 +10,54 @@
   </head>
 
   <body>
-    <h1>Interaktiv animierte Scheibe</h1>
-    <table style="text-align: center; font-size: 20px; font-weight: bold; width: 100%">
-      <tr>
-        <td style="background-color: white;">
-          <br><img id="wheel" src="img/frame/wheel_0.png" style="width: 320px; height: 320px" alt="Abstract Wheel"><br>
-          <a href="https://pixabay.com/de/vectors/abstrakt-kunst-zyklon-geometrischen-2154781/"
-             style="font-size: x-small">
-            https://pixabay.com/de/vectors/abstrakt-kunst-zyklon-geometrischen-2154781/
-          </a><br><br>
-        </td>
-        <td style="background-color: white;">
-          <img id="globe" src="img/frame/globe_0.png" style="width: 320px; height: 320px" alt="Grid Globe">
-        </td>
-      </tr>
-      <tr>
-        <td style="background-color: darkgray">
-          <table style="text-align: center; font-size: 20px; font-weight: bold; width: 100%">
-            <tr>
-              <th>Animation starten</th>
-              <th>Rotation links</th>
-              <th>Rotation rechts</th>
-              <th>Animation stoppen</th>
-            </tr>
-            <tr>
-              <td><img src="img/key/key_up.png" style="width: 50px; height: 50px" alt="UP" onclick="wheel.start()"></td>
-              <td><img src="img/key/key_left.png" style="width: 50px; height: 50px" alt="LEFT" onclick="wheel.moveLeft()">
-              </td>
-              <td><img src="img/key/key_right.png" style="width: 50px; height: 50px" alt="RIGHT"
-                       onclick="wheel.moveRight()"></td>
-              <td><img src="img/key/key_down.png" style="width: 50px; height: 50px" alt="DOWN" onclick="wheel.stop()"></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>oder</td>
-              <td>oder</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td><img src="img/key/key_l.png" style="width: 50px; height: 50px" alt="L" onclick="wheel.moveLeft()"></td>
-              <td><img src="img/key/key_r.png" style="width: 50px; height: 50px" alt="R" onclick="wheel.moveRight()"></td>
-              <td></td>
-            </tr>
-          </table>
-        </td>
-        <td style="background-color: darkgray">
-          <table style="text-align: center; font-size: 20px; font-weight: bold; width: 100%">
-            <tr>
-              <th>Animation starten</th>
-              <th>Rotation links</th>
-              <th>Rotation rechts</th>
-              <th>Animation stoppen</th>
-            </tr>
-            <tr>
-              <td><img src="img/key/key_w.png" style="width: 50px; height: 50px" alt="W" onclick="globe.start()"></td>
-              <td><img src="img/key/key_a.png" style="width: 50px; height: 50px" alt="A" onclick="globe.moveLeft()"></td>
-              <td><img src="img/key/key_d.png" style="width: 50px; height: 50px" alt="D" onclick="globe.moveRight()"></td>
-              <td><img src="img/key/key_s.png" style="width: 50px; height: 50px" alt="S" onclick="globe.stop()"></td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <p><a href="index.html"><img src="img/home.png" alt="Graphical Visualisation Technologies"></a></p>
+    <div id="view">
+      <img id="wheel" src="img/frame/wheel_0.png" alt="Abstract Wheel">
+      <img id="globe" src="img/frame/globe_0.png" alt="Grid Globe">
+    </div>
+    <div id="ui">
+      <table>
+        <tr>
+          <th>Animation starten</th>
+          <th>Rotation links</th>
+          <th>Rotation rechts</th>
+          <th>Animation stoppen</th>
+        </tr>
+        <tr>
+          <td><img src="img/key/key_up.png" alt="UP" onclick="wheel.start()"></td>
+          <td><img src="img/key/key_left.png" alt="LEFT" onclick="wheel.moveLeft()">
+          </td>
+          <td><img src="img/key/key_right.png" alt="RIGHT"
+                   onclick="wheel.moveRight()"></td>
+          <td><img src="img/key/key_down.png" alt="DOWN" onclick="wheel.stop()"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>oder</td>
+          <td>oder</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><img src="img/key/key_l.png" alt="L" onclick="wheel.moveLeft()"></td>
+          <td><img src="img/key/key_r.png" alt="R" onclick="wheel.moveRight()"></td>
+          <td></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <th>Animation starten</th>
+          <th>Rotation links</th>
+          <th>Rotation rechts</th>
+          <th>Animation stoppen</th>
+        </tr>
+        <tr>
+          <td><img src="img/key/key_w.png" alt="W" onclick="globe.start()"></td>
+          <td><img src="img/key/key_a.png" alt="A" onclick="globe.moveLeft()"></td>
+          <td><img src="img/key/key_d.png" alt="D" onclick="globe.moveRight()"></td>
+          <td><img src="img/key/key_s.png" alt="S" onclick="globe.stop()"></td>
+        </tr>
+      </table>
+    </div>
     <script src="js/ea1.js"></script>
   </body>
 

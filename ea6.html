@@ -10,15 +10,17 @@
   </head>
 
   <body onload="app.start()">
-    <h1>Kamerabewegung</h1>
-    <canvas id="ea6-canvas" width="1000" height="500"></canvas>
-    <p>Steuerung: K = Animation</p>
-    <p><a href="index.html"><img src="img/home.png" alt="Graphical Visualisation Technologies" width="50"
-                                 height="50"></a></p>
+    <div id="view">
+      <canvas id="ea6-canvas" class="fullscreen"></canvas>
+    </div>
+    <div id="ui">
+      <p>Steuerung: K = Animation</p>
+    </div>
     <script src="js/vendor/gl-matrix.js"></script>
     <script src="js/model/sphere.js"></script>
     <script src="js/model/torus.js"></script>
     <script src="js/model/plane.js"></script>
+    <script src="js/webgl-utils.js"></script>
     <script src="js/ea6.js"></script>
     <script type="x-shader/x-vertex" id="vertexshader">
 			attribute vec3 aPosition;
