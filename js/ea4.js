@@ -1,54 +1,47 @@
 const app = (function () {
 
-  const CANVAS_ID = 'ea4-canvas';
-  const VERTEX_SHADER_SOURCE = 'attribute vec3 pos; attribute vec4 col; varying vec4 color; void main() { color = col; gl_Position = vec4(pos * 0.2, 1); }';
-  const FRAGMENT_SHADER_SOURCE = 'precision mediump float; varying vec4 color; void main() { gl_FragColor = color; }';
-
   const ANTI_TREFOIL_KNOT = 0, TREFOIL_KNOT = 1, ASYMMETRIC_TORUS = 2, SNAIL = 3, WAVE_TORUS = 4, ANTI_WAVE_TORUS = 5;
 
-  let gl, program;
+  let gl;
+
+  let program;
+
   let vertices, indices_lines, indices_triangles, colors_lines, colors_triangles;
 
-  function main() {
+  window.addEventListener('load', () => init());
+
+  function init() {
+    setup();
+    build();
+  }
+
+  function setup() {
     gl = webglUtils.getContext('ea4-canvas');
     gl.clearColor(0, 0, 0, 0);
     gl.frontFace(gl.CCW);
-    gl.enable(gl.CULL_FACE);
     gl.cullFace(gl.BACK);
-    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
     gl.depthFunc(gl.LEQUAL);
-    gl.enable(gl.POLYGON_OFFSET_FILL);
+    gl.enable(gl.DEPTH_TEST);
     gl.polygonOffset(1.0, 1.0);
-    program = webglUtils.createProgram(
-      gl,
-      webglUtils.compileShader(gl, VERTEX_SHADER_SOURCE, gl.VERTEX_SHADER),
-      webglUtils.compileShader(gl, FRAGMENT_SHADER_SOURCE, gl.FRAGMENT_SHADER),
-    );
-    const viewportSize = Math.min(gl.viewportWidth, gl.viewportHeight);
-    gl.viewport(
-      (gl.viewportWidth - viewportSize) / 2,
-      (gl.viewportHeight - viewportSize) / 2,
-      viewportSize,
-      viewportSize,
-    );
-    gl.bindAttribLocation(program, 0, "pos");
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    construct(TREFOIL_KNOT, 64, 20);
-    construct(ASYMMETRIC_TORUS, 64, 20);
+    gl.enable(gl.POLYGON_OFFSET_FILL);
+    webglUtils.resizeCanvasToFullscreenSquare(gl);
+    const vertexSource = 'attribute vec3 pos; attribute vec4 col; varying vec4 color; void main() { color = col; gl_Position = vec4(pos * 0.2, 1); }';
+    const fragmentSource = 'precision mediump float; varying vec4 color; void main() { gl_FragColor = color; }';
+    program = webglUtils.createProgramAndCompile(gl, vertexSource, fragmentSource);
   }
 
-  function changeTask() {
+  function build() {
+    const firstSurface = document.getElementById('first').checked;
+    const secondSurface = document.getElementById('second').checked;
+    gl.bindAttribLocation(program, 0, "pos");
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    const text = document.getElementById("change").firstChild;
-    if (text.data === "Eigene Parametrisierung") {
-      construct(ANTI_TREFOIL_KNOT, 64, 20);
-      construct(ANTI_WAVE_TORUS, 64, 20);
-      text.data = "Parametrisierte Flächen";
-    } else if (text.data === "Parametrisierte Flächen") {
+    if (firstSurface) {
       construct(TREFOIL_KNOT, 64, 20);
       construct(ASYMMETRIC_TORUS, 64, 20);
-      text.data = "Eigene Parametrisierung";
+    } else if (secondSurface) {
+      construct(ANTI_TREFOIL_KNOT, 64, 20);
+      construct(ANTI_WAVE_TORUS, 64, 20);
     }
   }
 
@@ -56,6 +49,8 @@ const app = (function () {
     let range_u, range_v;
     let param;
     let index = [0, 0, 0];
+
+
     switch (object) {
       case ANTI_TREFOIL_KNOT:
         range_u = [0, 12 * Math.PI];
@@ -199,42 +194,47 @@ const app = (function () {
         }
       }
     }
-    place(vertices);
-    dye(colors_triangles);
-    render(indices_triangles, gl.TRIANGLES);
-    dye(colors_lines);
-    render(indices_lines, gl.LINES);
+
+    createPositionBuffer(vertices);
+    createColorBuffer(colors_triangles);
+    const buffer1 = createIndexBuffer(indices_triangles);
+    gl.drawElements(gl.TRIANGLES, buffer1.numberOfElements, gl.UNSIGNED_SHORT, 0);
+    createColorBuffer(colors_lines);
+    const buffer2 = createIndexBuffer(indices_lines);
+    gl.drawElements(gl.LINES, buffer2.numberOfElements, gl.UNSIGNED_SHORT, 0);
   }
 
-  function place(vertices) {
+  function createPositionBuffer(positions) {
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-    const attribute = gl.getAttribLocation(program, 'pos');
-    gl.vertexAttribPointer(attribute, 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(attribute);
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+    const attribLocation = gl.getAttribLocation(program, 'pos');
+    gl.vertexAttribPointer(attribLocation, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(attribLocation);
+    return buffer;
   }
 
-  function dye(colors) {
+  function createColorBuffer(colors) {
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
-    let attribute = gl.getAttribLocation(program, 'col');
-    gl.vertexAttribPointer(attribute, 4, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(attribute);
+    let attribLocation = gl.getAttribLocation(program, 'col');
+    gl.vertexAttribPointer(attribLocation, 4, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(attribLocation);
+    return buffer;
   }
 
-  function render(indices, type) {
+  function createIndexBuffer(indices) {
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
     buffer.numberOfElements = indices.length;
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer);
-    gl.drawElements(type, buffer.numberOfElements, gl.UNSIGNED_SHORT, 0);
+    return buffer;
   }
 
   return {
-    start: main,
-    change: changeTask,
+    start: init,
+    change: build,
   };
 }());

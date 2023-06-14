@@ -1,0 +1,47 @@
+[
+  {
+    "id": "Interaktiv animiertes Bild",
+    "link": "ea1.html",
+    "image": "img/preview/ea1.png"
+  },
+  {
+    "id": "Geometrie aus Linien",
+    "link": "ea2.html",
+    "image": "img/preview/ea2.png"
+  },
+  {
+    "id": "Farbig gefüllte Geometrie",
+    "link": "ea3.html",
+    "image": "img/preview/ea3.png"
+  },
+  {
+    "id": "Parametrisierte Flächen",
+    "link": "ea4.html",
+    "image": "img/preview/ea4.png"
+  },
+  {
+    "id": "Kamerabewegung",
+    "link": "ea5.html",
+    "image": "img/preview/ea5.png"
+  },
+  {
+    "id": "Objektbewegung",
+    "link": "ea6.html",
+    "image": "img/preview/ea6.png"
+  },
+  {
+    "id": "Z-Buffer Visualisierung",
+    "link": "ea7.html",
+    "image": "img/preview/ea7.png"
+  },
+  {
+    "id": "Lichter auf Kreisbahn",
+    "link": "ea8.html",
+    "image": "img/preview/ea8.png"
+  },
+  {
+    "id": "Torustextur",
+    "link": "ea9.html",
+    "image": "img/preview/ea9.png"
+  }
+]

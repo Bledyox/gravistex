@@ -10,12 +10,23 @@
   </head>
 
   <body>
-    <div id="view">
-      <img id="wheel" src="img/frame/wheel_0.png" alt="Abstract Wheel">
-      <img id="globe" src="img/frame/globe_0.png" alt="Grid Globe">
+    <div id="view" class="fullscreen">
+      <img id="image-canvas" class="dark-inverter" style="height: 80vmin; width: 80vmin; padding: 10vmin;">
     </div>
     <div id="ui">
-      <table>
+      <div class="vertical">
+        <div>
+          <input id="disc" type="radio" name="animation" value="disc" onclick="app.update()" checked>
+          <label for="disc">Abstrakte Scheibe</label>
+        </div>
+        <div>
+          <input id="globe" type="radio" name="animation" value="globe" onclick="app.update()">
+          <label for="globe">Globus</label>
+        </div>
+        <input type="button" value="PLAY" onclick="app.play()">
+        <input type="button" value="PAUSE" onclick="app.pause()">
+      </div>
+      <table class="hidden">
         <tr>
           <th>Animation starten</th>
           <th>Rotation links</th>
@@ -43,7 +54,7 @@
           <td></td>
         </tr>
       </table>
-      <table>
+      <table class="hidden">
         <tr>
           <th>Animation starten</th>
           <th>Rotation links</th>

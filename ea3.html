@@ -9,9 +9,14 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
 
-  <body onload="app.start()">
+  <body>
     <div id="view">
       <canvas id="ea3-canvas" class="fullscreen"></canvas>
+    </div>
+    <div id="ui" class="horizontal">
+      <label for="count">Anzahl an Dreiecke:</label>
+      <input id="count" type="range" value="3" min="0" max="8" oninput="result.value = 3 ** this.value" onclick="app.update()">
+      <output id="result">9</output>
     </div>
     <script src="js/webgl-utils.js"></script>
     <script src="js/ea3.js"></script>

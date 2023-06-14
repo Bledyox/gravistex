@@ -20,6 +20,24 @@ const webglUtils = (function () {
     return program;
   }
 
+  function createProgramFromScript(gl, vertexId = 'vertex-shader', fragmentId = 'fragment-shader') {
+    const vertexSource = document.getElementById(vertexId).text;
+    const fragmentSource = document.getElementById(fragmentId).text;
+    return createProgram(
+      gl,
+      compileShader(gl, vertexSource, gl.VERTEX_SHADER),
+      compileShader(gl, fragmentSource, gl.FRAGMENT_SHADER),
+    );
+  }
+
+  function createProgramAndCompile(gl, vertexSource, fragmentSource) {
+    return createProgram(
+      gl,
+      compileShader(gl, vertexSource, gl.VERTEX_SHADER),
+      compileShader(gl, fragmentSource, gl.FRAGMENT_SHADER),
+    );
+  }
+
   function getContext(canvasId = 'webgl-canvas', contextId = 'webgl') {
     const canvas = document.getElementById(canvasId);
     if (!canvas) throw `*** Error: unknown canvas element ${canvasId}`;
@@ -32,10 +50,27 @@ const webglUtils = (function () {
     return gl;
   }
 
+  function resizeCanvasToFullscreen(gl) {
+    gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+  }
+
+  function resizeCanvasToFullscreenSquare(gl) {
+    const viewportSize = Math.min(gl.viewportWidth, gl.viewportHeight);
+    gl.viewport(
+      (gl.viewportWidth - viewportSize) / 2,
+      (gl.viewportHeight - viewportSize) / 2,
+      viewportSize,
+      viewportSize,
+    );
+  }
+
   return {
     compileShader: compileShader,
     createProgram: createProgram,
+    createProgramAndCompile: createProgramAndCompile,
     getContext: getContext,
+    resizeCanvasToFullscreen: resizeCanvasToFullscreen,
+    resizeCanvasToFullscreenSquare: resizeCanvasToFullscreenSquare,
   };
 }());
 

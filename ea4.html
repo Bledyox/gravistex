@@ -9,12 +9,21 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
 
-  <body onload="app.start()">
+  <body>
     <div id="view">
       <canvas id="ea4-canvas" class="fullscreen"></canvas>
     </div>
     <div id="ui">
-      <button type="button" id="change" onclick="app.change()">Eigene Parametrisierung</button>
+      <div class="vertical">
+        <div>
+          <input id="first" type="radio" name="parameterization" value="first" onclick="app.change()" checked>
+          <label for="first">Parametrisierte Fläche</label>
+        </div>
+        <div>
+          <input id="second" type="radio" name="parameterization" value="second" onclick="app.change()">
+          <label for="second">Eigene Parametrisierung</label>
+        </div>
+      </div>
     </div>
     <script src="js/webgl-utils.js"></script>
     <script src="js/ea4.js"></script>

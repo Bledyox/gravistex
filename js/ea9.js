@@ -2,9 +2,7 @@ const app = (function () {
 
   let gl;
 
-  // The shader program object is also used to
-  // store attribute and uniform locations.
-  let prog;
+  let program;
 
   // Array of model objects.
   const models = [];
@@ -48,95 +46,72 @@ const app = (function () {
     },]
   };
 
-  function start() {
-    init();
-    render();
-  }
-
-  function init() {
+  function setup() {
     gl = webglUtils.getContext('ea9-canvas');
-    initShaderProgram();
-    initUniforms();
-    initModels();
-    initEventHandler();
-    initPipline();
-  }
-
-  /**
-   * Init pipeline parmters that will not change again. If projection or
-   * viewport change, thier setup must be in render function.
-   */
-  function initPipline() {
     gl.clearColor(0, 0, 0, 0);
-
-    // Backface culling.
     gl.frontFace(gl.CCW);
-    gl.enable(gl.CULL_FACE);
     gl.cullFace(gl.BACK);
-
-    // Depth(Z)-Buffer.
+    gl.enable(gl.CULL_FACE);
     gl.enable(gl.DEPTH_TEST);
-
-    // Polygon offset of rastered Fragments.
-    gl.enable(gl.POLYGON_OFFSET_FILL);
     gl.polygonOffset(0.5, 0);
-
-    // Set viewport.
+    gl.enable(gl.POLYGON_OFFSET_FILL);
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-
-    // Init camera.
-    // Set projection aspect ratio.
     camera.aspect = gl.viewportWidth / gl.viewportHeight;
-  }
-
-  function initShaderProgram() {
     const vs = document.getElementById("vertexshader").text;
     const fs = document.getElementById("fragmentshader").text;
-    prog = webglUtils.createProgram(
+    program = webglUtils.createProgram(
       gl,
       webglUtils.compileShader(gl, vs, gl.VERTEX_SHADER),
       webglUtils.compileShader(gl, fs, gl.FRAGMENT_SHADER),
     );
-    gl.bindAttribLocation(prog, 0, "aPosition");
+  }
+
+  function main() {
+    setup();
+    gl.bindAttribLocation(program, 0, "aPosition");
+    initUniforms();
+    initModels();
+    initEventHandler();
+    render();
   }
 
   function initUniforms() {
     // Projection Matrix.
-    prog.pMatrixUniform = gl.getUniformLocation(prog, "uPMatrix");
+    program.pMatrixUniform = gl.getUniformLocation(program, "uPMatrix");
 
     // Model-View-Matrix.
-    prog.mvMatrixUniform = gl.getUniformLocation(prog, "uMVMatrix");
+    program.mvMatrixUniform = gl.getUniformLocation(program, "uMVMatrix");
 
     // Normal Matrix.
-    prog.nMatrixUniform = gl.getUniformLocation(prog, "uNMatrix");
+    program.nMatrixUniform = gl.getUniformLocation(program, "uNMatrix");
 
     // Color.
-    prog.colorUniform = gl.getUniformLocation(prog, "uColor");
+    program.colorUniform = gl.getUniformLocation(program, "uColor");
 
     // Light.
-    prog.ambientLightUniform = gl.getUniformLocation(prog,
+    program.ambientLightUniform = gl.getUniformLocation(program,
       "ambientLight");
     // Array for light sources uniforms.
-    prog.lightUniform = [];
+    program.lightUniform = [];
     // Loop over light sources.
     for (let j = 0; j < illumination.light.length; j++) {
       const lightNb = "light[" + j + "]";
       // Store one object for every light source.
       const l = {};
-      l.isOn = gl.getUniformLocation(prog, lightNb + ".isOn");
-      l.position = gl.getUniformLocation(prog, lightNb + ".position");
-      l.color = gl.getUniformLocation(prog, lightNb + ".color");
-      prog.lightUniform[j] = l;
+      l.isOn = gl.getUniformLocation(program, lightNb + ".isOn");
+      l.position = gl.getUniformLocation(program, lightNb + ".position");
+      l.color = gl.getUniformLocation(program, lightNb + ".color");
+      program.lightUniform[j] = l;
     }
 
     // Material.
-    prog.materialKaUniform = gl.getUniformLocation(prog, "material.ka");
-    prog.materialKdUniform = gl.getUniformLocation(prog, "material.kd");
-    prog.materialKsUniform = gl.getUniformLocation(prog, "material.ks");
-    prog.materialKeUniform = gl.getUniformLocation(prog, "material.ke");
+    program.materialKaUniform = gl.getUniformLocation(program, "material.ka");
+    program.materialKdUniform = gl.getUniformLocation(program, "material.kd");
+    program.materialKsUniform = gl.getUniformLocation(program, "material.ks");
+    program.materialKeUniform = gl.getUniformLocation(program, "material.ke");
 
     // Texture.
-    prog.textureUniform = gl.getUniformLocation(prog, "uTexture");
+    program.textureUniform = gl.getUniformLocation(program, "uTexture");
   }
 
   /**
@@ -271,25 +246,25 @@ const app = (function () {
     gl.bindBuffer(gl.ARRAY_BUFFER, model.vboPos);
     gl.bufferData(gl.ARRAY_BUFFER, model.vertices, gl.STATIC_DRAW);
     // Bind vertex buffer to attribute variable.
-    prog.positionAttrib = gl.getAttribLocation(prog, 'aPosition');
-    gl.enableVertexAttribArray(prog.positionAttrib);
+    program.positionAttrib = gl.getAttribLocation(program, 'aPosition');
+    gl.enableVertexAttribArray(program.positionAttrib);
 
     // Setup normal vertex buffer object.
     model.vboNormal = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, model.vboNormal);
     gl.bufferData(gl.ARRAY_BUFFER, model.normals, gl.STATIC_DRAW);
     // Bind buffer to attribute variable.
-    prog.normalAttrib = gl.getAttribLocation(prog, 'aNormal');
-    gl.enableVertexAttribArray(prog.normalAttrib);
+    program.normalAttrib = gl.getAttribLocation(program, 'aNormal');
+    gl.enableVertexAttribArray(program.normalAttrib);
 
     // Setup texture coordinate vertex buffer object.
     model.vboTextureCoord = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, model.vboTextureCoord);
     gl.bufferData(gl.ARRAY_BUFFER, model.textureCoord, gl.STATIC_DRAW);
     // Bind buffer to attribute variable.
-    prog.textureCoordAttrib = gl
-      .getAttribLocation(prog, 'aTextureCoord');
-    gl.enableVertexAttribArray(prog.textureCoordAttrib);
+    program.textureCoordAttrib = gl
+      .getAttribLocation(program, 'aTextureCoord');
+    gl.enableVertexAttribArray(program.textureCoordAttrib);
 
     // Setup lines index buffer object.
     model.iboLines = gl.createBuffer();
@@ -397,11 +372,11 @@ const app = (function () {
     mat4.lookAt(camera.vMatrix, camera.eye, camera.center, camera.up);
 
     // Set light uniforms.
-    gl.uniform3fv(prog.ambientLightUniform, illumination.ambientLight);
+    gl.uniform3fv(program.ambientLightUniform, illumination.ambientLight);
     // Loop over light sources.
     for (let j = 0; j < illumination.light.length; j++) {
       // bool is transferred as integer.
-      gl.uniform1i(prog.lightUniform[j].isOn, illumination.light[j].isOn);
+      gl.uniform1i(program.lightUniform[j].isOn, illumination.light[j].isOn);
       // Tranform light postion in eye coordinates.
       // Copy current light position into a new array.
       const lightPos = [].concat(illumination.light[j].position);
@@ -410,8 +385,8 @@ const app = (function () {
       vec4.transformMat4(lightPos, lightPos, camera.vMatrix);
       // Remove homogenious coordinate.
       lightPos.pop();
-      gl.uniform3fv(prog.lightUniform[j].position, lightPos);
-      gl.uniform3fv(prog.lightUniform[j].color,
+      gl.uniform3fv(program.lightUniform[j].position, lightPos);
+      gl.uniform3fv(program.lightUniform[j].color,
         illumination.light[j].color);
     }
 
@@ -428,21 +403,21 @@ const app = (function () {
       // Set uniforms for model.
       //
       // Transformation matrices.
-      gl.uniformMatrix4fv(prog.mvMatrixUniform, false,
+      gl.uniformMatrix4fv(program.mvMatrixUniform, false,
         models[i].mvMatrix);
-      gl.uniformMatrix3fv(prog.nMatrixUniform, false,
+      gl.uniformMatrix3fv(program.nMatrixUniform, false,
         models[i].nMatrix);
       // Color (not used with lights).
-      gl.uniform4fv(prog.colorUniform, models[i].color);
+      gl.uniform4fv(program.colorUniform, models[i].color);
       // Material.
-      gl.uniform3fv(prog.materialKaUniform, models[i].material.ka);
-      gl.uniform3fv(prog.materialKdUniform, models[i].material.kd);
-      gl.uniform3fv(prog.materialKsUniform, models[i].material.ks);
-      gl.uniform1f(prog.materialKeUniform, models[i].material.ke);
+      gl.uniform3fv(program.materialKaUniform, models[i].material.ka);
+      gl.uniform3fv(program.materialKdUniform, models[i].material.kd);
+      gl.uniform3fv(program.materialKsUniform, models[i].material.ks);
+      gl.uniform1f(program.materialKeUniform, models[i].material.ke);
       // Texture.
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, models[i].texture);
-      gl.uniform1i(prog.textureUniform, 0);
+      gl.uniform1i(program.textureUniform, 0);
 
       draw(models[i]);
     }
@@ -477,7 +452,7 @@ const app = (function () {
         break;
     }
     // Set projection uniform.
-    gl.uniformMatrix4fv(prog.pMatrixUniform, false, camera.pMatrix);
+    gl.uniformMatrix4fv(program.pMatrixUniform, false, camera.pMatrix);
   }
 
   /**
@@ -513,21 +488,21 @@ const app = (function () {
   function draw(model) {
     // Setup position VBO.
     gl.bindBuffer(gl.ARRAY_BUFFER, model.vboPos);
-    gl.vertexAttribPointer(prog.positionAttrib, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(program.positionAttrib, 3, gl.FLOAT, false, 0, 0);
 
     // Setup normal VBO.
     gl.bindBuffer(gl.ARRAY_BUFFER, model.vboNormal);
-    gl.vertexAttribPointer(prog.normalAttrib, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(program.normalAttrib, 3, gl.FLOAT, false, 0, 0);
 
     // Setup texture VBO.
     gl.bindBuffer(gl.ARRAY_BUFFER, model.vboTextureCoord);
-    gl.vertexAttribPointer(prog.textureCoordAttrib, 2, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(program.textureCoordAttrib, 2, gl.FLOAT, false, 0, 0);
 
     // Setup rendering tris.
     const fill = (model.fillstyle.search(/fill/) !== -1);
     if (fill) {
-      gl.enableVertexAttribArray(prog.normalAttrib);
-      gl.enableVertexAttribArray(prog.textureCoordAttrib);
+      gl.enableVertexAttribArray(program.normalAttrib);
+      gl.enableVertexAttribArray(program.textureCoordAttrib);
 
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.iboTris);
       gl.drawElements(gl.TRIANGLES, model.iboTris.numberOfElements,
@@ -537,11 +512,11 @@ const app = (function () {
     // Setup rendering lines.
     const wireframe = (model.fillstyle.search(/wireframe/) !== -1);
     if (wireframe) {
-      gl.uniform4fv(prog.colorUniform, [0., 0., 0., 1.]);
-      gl.disableVertexAttribArray(prog.normalAttrib);
-      gl.disableVertexAttribArray(prog.textureCoordAttrib);
+      gl.uniform4fv(program.colorUniform, [0., 0., 0., 1.]);
+      gl.disableVertexAttribArray(program.normalAttrib);
+      gl.disableVertexAttribArray(program.textureCoordAttrib);
 
-      gl.vertexAttrib3f(prog.normalAttrib, 0, 0, 0);
+      gl.vertexAttrib3f(program.normalAttrib, 0, 0, 0);
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.iboLines);
       gl.drawElements(gl.LINES, model.iboLines.numberOfElements,
         gl.UNSIGNED_SHORT, 0);
@@ -550,7 +525,7 @@ const app = (function () {
 
   // App interface.
   return {
-    start: start
+    start: main
   };
 
 }());

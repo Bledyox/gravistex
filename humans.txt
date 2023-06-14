@@ -3,7 +3,7 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Sascha M. Schumacher -- Web-developer -- https://github.com/Bleydh
 
 # THANKS
 

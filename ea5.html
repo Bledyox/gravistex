@@ -14,10 +14,14 @@
       <canvas id="ea5-canvas" class="fullscreen"></canvas>
     </div>
     <div id="ui">
-      <label for="depth">Tiefe: </label>
-      <input id="depth" value="0" min="0" max="5" type="number" onchange="app.start()">
-      <br>
-      <p>Steuerung: W = Hoch, A = Links, S = Runter, D = Rechts, O = Ortho, P = Perspective F = Frustum</p>
+      <div class="vertical">
+        <div class="horizontal">
+          <label for="depth">Tiefe des Models:</label>
+          <input id="depth" type="range" value="2" min="0" max="5" oninput="result.value = this.value" onclick="app.start()">
+          <output id="result">2</output>
+        </div>
+        <div>W = Hoch | A = Links | S = Runter | D = Rechts | O = Ortho | P = Perspective | F = Frustum</div>
+      </div>
     </div>
     <script src="js/vendor/gl-matrix.js"></script>
     <script src="js/model/ea5-torus.js"></script>
@@ -28,7 +32,7 @@
     <script src="js/model/plane.js"></script>
     <script src="js/webgl-utils.js"></script>
     <script src="js/ea5.js"></script>
-    <script type="x-shader/x-vertex" id="vertexshader">
+    <script type="x-shader/x-vertex" id="vertex-shader">
 			attribute vec3 aPosition;
 			attribute vec3 aNormal;
 			uniform mat4 uPMatrix;
@@ -41,7 +45,7 @@
 			}
 
     </script>
-    <script type="x-shader/x-fragment" id="fragmentshader">
+    <script type="x-shader/x-fragment" id="fragment-shader">
 			precision mediump float;
 			varying vec4 vColor;
 			void main() {
