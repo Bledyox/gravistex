@@ -136,6 +136,13 @@ h2 {
   margin: 0;
   padding: 0;
   color: var(--font-color);
+  font-size: 4vmin;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+  color: var(--primary-color-variant);
   font-size: 2vmin;
 }
 
@@ -261,6 +268,7 @@ textarea {
   padding: 2vmin 0 0 0;
   top: 0;
   left: 0;
+  text-decoration: none;
   opacity: 0;
   transition: opacity .4s ease;
 }
