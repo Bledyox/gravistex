@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <title>Gravistex</title>
-    <meta name="description" content="Lektionen des Modules Graphical Visualisation Technologies">
+    <meta name="description" content="Graphical Visualisation Technologies">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="Graphical Visualisation Technologies">
+    <meta property="og:title" content="Gravistex">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://github.com/Bleydh">
     <meta property="og:image" content="icon.png">
@@ -15,17 +15,31 @@
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/gallery.css">
   </head>
 
   <body>
-    <header>
-      <img class="theme-toggle" onclick="configUtils.toggleThemeMode()">
-      <h1>Gravistex</h1>
-      <h3>Graphical Visualisation Technologies</h3>
+    <header class="floating">
+      <h1>Graphical Visualisation Technologies</h1>
+      <img id="theme-image" src="" alt="" onclick="configUtils.toggleTheme()" class="svg-button">
     </header>
     <main>
       <div id="loader" class="gallery"></div>
     </main>
+    <footer class="floating">
+      <small>© 2023 Sascha M. Schumacher. All rights reserved.</small>
+      <div class="horizontal no-list-style">
+        <a href="https://github.com/Bleydh">
+          <img src="img/pictogram/github.svg" alt="GitHub" class="svg-button">
+        </a>
+        <a href="https://www.linkedin.com/in/sascha-martin-schumacher-7782121a2/">
+          <img src="img/pictogram/linkedin.svg" alt="LinkedIn" class="svg-button">
+        </a>
+        <a href="https://twitter.com/bledyox">
+          <img src="img/pictogram/twitter.svg" alt="Twitter" class="svg-button">
+        </a>
+      </div>
+    </footer>
     <script src="js/vendor/modernizr-3.11.2.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>

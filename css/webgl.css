@@ -1,0 +1,23 @@
+body {
+  overflow: hidden;
+}
+
+#webgl-canvas {
+  margin: 0;
+  padding: 0;
+}
+
+#webgl-ui {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 1vmin;
+  left: 1vmin;
+  height: fit-content;
+  width: fit-content;
+  border-radius: 2vmin;
+}
+
+.dark-inverter {
+  filter: invert();
+}

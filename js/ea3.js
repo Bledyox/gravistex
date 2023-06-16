@@ -12,7 +12,7 @@ const app = (function () {
   }
 
   function setup() {
-    gl = webglUtils.getContext('ea3-canvas');
+    gl = webglUtils.getContext('webgl-canvas');
     gl.clearColor(0, 0, 0, 0);
     gl.frontFace(gl.CCW);
     gl.cullFace(gl.BACK);

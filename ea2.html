@@ -7,16 +7,17 @@
     <title>2D Geometrie aus Linien</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/webgl.css">
   </head>
 
   <body>
-    <div id="view">
-      <canvas id="webgl-canvas" class="fullscreen dark-inverter"></canvas>
-    </div>
-    <div id="ui" class="horizontal">
-      <label for="count">Anzahl an Linien:</label>
-      <input id="count" type="range" value="42" min="3" max="100" oninput="result.value = this.value" onclick="app.update()">
-      <output id="result">42</output>
+    <canvas id="webgl-canvas" class="dark-inverter"></canvas>
+    <div id="webgl-ui" class="floating">
+      <div class="horizontal">
+        <label for="count">Linien</label>
+        <input id="count" type="range" value="42" min="3" max="100" oninput="result.value = this.value" onclick="app.update()">
+        <output id="result">42</output>
+      </div>
     </div>
     <script src="js/main.js"></script>
     <script src="js/webgl-utils.js"></script>

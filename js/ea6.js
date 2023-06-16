@@ -63,7 +63,7 @@ const app = (function () {
   };
 
   function setup() {
-    gl = webglUtils.getContext('ea6-canvas');
+    gl = webglUtils.getContext();
     gl.clearColor(0, 0, 0, 0);
     gl.frontFace(gl.CCW);
     gl.enable(gl.CULL_FACE);

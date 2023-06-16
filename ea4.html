@@ -7,19 +7,18 @@
     <title>Parametrisierte Flächen</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/webgl.css">
   </head>
 
   <body>
-    <div id="view">
-      <canvas id="ea4-canvas" class="fullscreen"></canvas>
-    </div>
-    <div id="ui">
+    <canvas id="webgl-canvas"></canvas>
+    <div id="webgl-ui" class="floating">
       <div class="vertical">
-        <div>
+        <div class="horizontal">
           <input id="first" type="radio" name="parameterization" value="first" onclick="app.change()" checked>
           <label for="first">Parametrisierte Fläche</label>
         </div>
-        <div>
+        <div class="horizontal">
           <input id="second" type="radio" name="parameterization" value="second" onclick="app.change()">
           <label for="second">Eigene Parametrisierung</label>
         </div>

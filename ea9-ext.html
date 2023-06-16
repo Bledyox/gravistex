@@ -7,15 +7,16 @@
     <title>Torustextur</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/webgl.css">
   </head>
 
   <body onload="app.start()">
-    <div id="view">
-      <canvas id="ea9-canvas" class="fullscreen"></canvas>
-    </div>
-    <div id="ui">
-      <p><b>Steuerung:</b> Bewegung des Torus mit X-, Y- und Z-Taste</p>
-      <button type="button" onclick="window.location.href='ea9.html'">Bildtextur</button>
+    <canvas id="webgl-canvas"></canvas>
+    <div id="webgl-ui" class="floating">
+      <div class="vertical">
+        <div>Bewegung des Torus mit X-, Y- und Z-Taste</div>
+        <button type="button" onclick="window.location.href='ea9.html'">Bildtextur</button>
+      </div>
     </div>
     <script src="js/vendor/gl-matrix.js"></script>
     <script src="js/model/ea9-torus.js"></script>

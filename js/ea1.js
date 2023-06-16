@@ -1,5 +1,3 @@
-"use strict";
-
 const app = (function () {
 
   let canvas;
@@ -12,9 +10,18 @@ const app = (function () {
 
   let clockwise;
 
+  const keyMapping = {
+    1: () => console.log('1'),
+    2: () => console.log('2'),
+    ARROWUP: () => play(),
+    ARROWRIGHT: () => console.log('AR'),
+    ARROWDOWN: () => pause(),
+    ARROWLEFT: () => console.log('AL'),
+  };
+
   const image = {
-    'disc': '../img/disc/frame.svg',
-    'globe': [
+    disc: '../img/disc/frame.svg',
+    globe: [
       '../img/globe/frame-0.svg',
       '../img/globe/frame-1.svg',
       '../img/globe/frame-2.svg',
@@ -28,15 +35,24 @@ const app = (function () {
     ],
   };
 
+
   window.addEventListener('load', () => init());
+
+  window.addEventListener('keydown', event => handle(event));
 
   function init() {
     setup();
     build();
   }
 
+  function handle(event) {
+    if (event.key.toUpperCase() in keyMapping) keyMapping[event.key.toUpperCase()]();
+  }
+
   function setup() {
-    canvas = document.getElementById('image-canvas');
+    canvas = document.getElementById('webgl-canvas');
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
     position = 0;
     clockwise = false;
   }
@@ -103,75 +119,75 @@ const app = (function () {
   };
 }());
 
-
-class Animation {
-  constructor(name) {
-    this.name = name;
-    this.id = 0;
-    this.src = [];
-    for (let i = 0; i < 12; i++) this.src[i] = "../img/frame/" + name + "_" + i + ".png";
-  }
-
-  moveLeft() {
-    this.id = (this.id <= 0) ? 11 : this.id - 1;
-    document.getElementById(this.name).src = this.src[this.id];
-  }
-
-  moveRight() {
-    this.id = (this.id <= 0) ? 11 : this.id - 1;
-    document.getElementById(this.name).src = this.src[this.id];
-  }
-
-  start() {
-    this.interval = setInterval(this.moveRight.bind(this), 500);
-  }
-
-  stop() {
-    clearInterval(this.interval);
-  }
-}
-
-let wheel = new Animation("wheel");
-let globe = new Animation("globe");
-
-
-document.addEventListener('load', () => {
-  const canvas = document.getElementById('image-canvas');
-
-});
-
-// animation control
-document.addEventListener('keydown', function (event) {
-  switch (event.key.toUpperCase()) {
-    case "ARROWUP":
-      wheel.start();
-      break;
-    case "ARROWDOWN":
-      wheel.stop();
-      break;
-    case "ARROWLEFT":
-      wheel.moveLeft();
-      break;
-    case "ARROWRIGHT":
-      wheel.moveRight();
-      break;
-    case "L":
-      wheel.moveLeft();
-      break;
-    case "R":
-      wheel.moveRight();
-      break;
-    case "W":
-      globe.start();
-      break;
-    case "A":
-      globe.moveLeft();
-      break;
-    case "S":
-      globe.stop();
-      break;
-    case "D":
-      globe.moveRight();
-      break;
-  }
-});
+//
+// class Animation {
+//   constructor(name) {
+//     this.name = name;
+//     this.id = 0;
+//     this.src = [];
+//     for (let i = 0; i < 12; i++) this.src[i] = "../img/frame/" + name + "_" + i + ".png";
+//   }
+//
+//   moveLeft() {
+//     this.id = (this.id <= 0) ? 11 : this.id - 1;
+//     document.getElementById(this.name).src = this.src[this.id];
+//   }
+//
+//   moveRight() {
+//     this.id = (this.id <= 0) ? 11 : this.id - 1;
+//     document.getElementById(this.name).src = this.src[this.id];
+//   }
+//
+//   start() {
+//     this.interval = setInterval(this.moveRight.bind(this), 500);
+//   }
+//
+//   stop() {
+//     clearInterval(this.interval);
+//   }
+// }
+//
+// let wheel = new Animation("wheel");
+// let globe = new Animation("globe");
+//
+//
+// document.addEventListener('load', () => {
+//   const canvas = document.getElementById('image-canvas');
+//
+// });
+//
+// // animation control
+// document.addEventListener('keydown', function (event) {
+//   switch (event.key.toUpperCase()) {
+//     case "ARROWUP":
+//       wheel.start();
+//       break;
+//     case "ARROWDOWN":
+//       wheel.stop();
+//       break;
+//     case "ARROWLEFT":
+//       wheel.moveLeft();
+//       break;
+//     case "ARROWRIGHT":
+//       wheel.moveRight();
+//       break;
+//     case "L":
+//       wheel.moveLeft();
+//       break;
+//     case "R":
+//       wheel.moveRight();
+//       break;
+//     case "W":
+//       globe.start();
+//       break;
+//     case "A":
+//       globe.moveLeft();
+//       break;
+//     case "S":
+//       globe.stop();
+//       break;
+//     case "D":
+//       globe.moveRight();
+//       break;
+//   }
+// });

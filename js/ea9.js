@@ -47,7 +47,7 @@ const app = (function () {
   };
 
   function setup() {
-    gl = webglUtils.getContext('ea9-canvas');
+    gl = webglUtils.getContext();
     gl.clearColor(0, 0, 0, 0);
     gl.frontFace(gl.CCW);
     gl.cullFace(gl.BACK);

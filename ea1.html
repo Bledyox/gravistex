@@ -7,67 +7,37 @@
     <title>Interaktiv animierte Scheibe</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/webgl.css">
   </head>
 
   <body>
-    <div id="view" class="fullscreen">
-      <img id="image-canvas" class="dark-inverter" style="height: 80vmin; width: 80vmin; padding: 10vmin;">
-    </div>
-    <div id="ui">
+    <img id="webgl-canvas" class="dark-inverter">
+    <div id="webgl-ui" class="floating">
       <div class="vertical">
-        <div>
+        <h3>Animation</h3>
+        <div class="horizontal">
           <input id="disc" type="radio" name="animation" value="disc" onclick="app.update()" checked>
           <label for="disc">Abstrakte Scheibe</label>
         </div>
-        <div>
+        <div class="horizontal">
           <input id="globe" type="radio" name="animation" value="globe" onclick="app.update()">
           <label for="globe">Globus</label>
         </div>
-        <input type="button" value="PLAY" onclick="app.play()">
-        <input type="button" value="PAUSE" onclick="app.pause()">
+        <h3>Steuerung</h3>
+        <div class="horizontal">
+          <input id="play" type="radio" name="control" value="play" onclick="app.play()">
+          <label for="play">Abspielen</label>
+        </div>
+        <div class="horizontal">
+          <input id="pause" type="radio" name="control" value="pause" onclick="app.pause()" checked>
+          <label for="pause">Pausieren</label>
+        </div>
+        <h3>Info</h3>
+        <div>Up = Play</div>
+        <div>Down = Pause</div>
+        <div>Left = Links</div>
+        <div>Right = Rechts</div>
       </div>
-      <table class="hidden">
-        <tr>
-          <th>Animation starten</th>
-          <th>Rotation links</th>
-          <th>Rotation rechts</th>
-          <th>Animation stoppen</th>
-        </tr>
-        <tr>
-          <td><img src="img/key/key_up.png" alt="UP" onclick="wheel.start()"></td>
-          <td><img src="img/key/key_left.png" alt="LEFT" onclick="wheel.moveLeft()">
-          </td>
-          <td><img src="img/key/key_right.png" alt="RIGHT"
-                   onclick="wheel.moveRight()"></td>
-          <td><img src="img/key/key_down.png" alt="DOWN" onclick="wheel.stop()"></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>oder</td>
-          <td>oder</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><img src="img/key/key_l.png" alt="L" onclick="wheel.moveLeft()"></td>
-          <td><img src="img/key/key_r.png" alt="R" onclick="wheel.moveRight()"></td>
-          <td></td>
-        </tr>
-      </table>
-      <table class="hidden">
-        <tr>
-          <th>Animation starten</th>
-          <th>Rotation links</th>
-          <th>Rotation rechts</th>
-          <th>Animation stoppen</th>
-        </tr>
-        <tr>
-          <td><img src="img/key/key_w.png" alt="W" onclick="globe.start()"></td>
-          <td><img src="img/key/key_a.png" alt="A" onclick="globe.moveLeft()"></td>
-          <td><img src="img/key/key_d.png" alt="D" onclick="globe.moveRight()"></td>
-          <td><img src="img/key/key_s.png" alt="S" onclick="globe.stop()"></td>
-        </tr>
-      </table>
     </div>
     <script src="js/ea1.js"></script>
   </body>

@@ -7,14 +7,16 @@
     <title>Z-Buffer Visualisierung</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/webgl.css">
   </head>
 
   <body onload="app.start()">
-    <div id="view">
-      <canvas id="ea7-canvas" class="fullscreen"></canvas>
-    </div>
-    <div id="ui">
-      <p>Steuerung: W = Hoch, A = Links, S = Runter, D = Rechts, O = Ortho, P = Perspective F = Frustum</p>
+    <canvas id="webgl-canvas"></canvas>
+    <div id="webgl-ui" class="floating">
+      <div class="vertical">
+        <div>W = Hoch | A = Links | S = Runter | D = Rechts</div>
+        <div>O = Ortho | P = Perspective | F = Frustum</div>
+      </div>
     </div>
     <script src="js/vendor/gl-matrix.js"></script>
     <script src="js/model/sphere.js"></script>

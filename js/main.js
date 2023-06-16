@@ -3,35 +3,32 @@ const configUtils = (function () {
 
   window.addEventListener('load', () => {
     const storedTheme = localStorage.getItem('theme');
-    const mediaTheme = window.matchMedia('(prefers-color-scheme:dark').matches ? 'dark' : 'light';
+    const mediaTheme = window.matchMedia('(prefers-color-scheme:light').matches ? 'light' : 'dark';
     const theme = storedTheme || mediaTheme;
-    if (theme) document.documentElement.setAttribute('data-theme', theme);
+    setTheme(theme);
   });
 
   function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
-  }
-
-  function toggleThemeMode() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    if (currentTheme === 'light') {
-      setTheme('dark');
+    document.documentElement.setAttribute('data-theme', theme);
+    const themeImage = document.getElementById('theme-image');
+    if (!themeImage) return;
+    if (theme === 'light') {
+      themeImage.src = '../img/pictogram/moon.svg';
+      themeImage.alt = 'Dark mode';
     } else {
-      setTheme('light');
+      themeImage.src = '../img/pictogram/sun.svg';
+      themeImage.alt = 'Light mode';
     }
   }
 
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const theme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(theme);
+  }
+
   return {
-    toggleThemeMode: toggleThemeMode,
+    toggleTheme: toggleTheme,
   };
 }());
-
-
-
-
-
-
-
-
-

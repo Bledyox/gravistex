@@ -7,14 +7,15 @@
     <title>Objekte bewegen - fliegende Kugeln</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/webgl.css">
   </head>
 
   <body onload="app.start()">
-    <div id="view">
-      <canvas id="ea6-canvas" class="fullscreen"></canvas>
-    </div>
-    <div id="ui">
-      <p>Steuerung: K = Animation</p>
+    <canvas id="webgl-canvas"></canvas>
+    <div id="webgl-ui" class="floating">
+      <div class="horizontal">
+        <div>K = Animation</div>
+      </div>
     </div>
     <script src="js/vendor/gl-matrix.js"></script>
     <script src="js/model/sphere.js"></script>

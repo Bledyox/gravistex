@@ -1,0 +1,57 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery > * {
+  margin: 2vmin;
+}
+
+.preview {
+  display: block;
+  position: relative;
+  box-sizing: content-box;
+  overflow: hidden;
+  height: 24vh;
+  width: 24vw;
+  border-radius: 2vmin;
+  background: radial-gradient(var(--surface-color), var(--surface-color-variant));
+  color: var(--font-color);
+  box-shadow: .2vmin .2vmin .2vmin var(--shadow-color);
+  transition: box-shadow .4s ease;
+}
+
+.preview:hover {
+  box-shadow: 0 0 2vmin var(--primary-color-variant);
+}
+
+.preview > .content {
+  width: 100%;
+  transform: scale(1);
+  transition: transform .4s ease;
+}
+
+.preview:hover > .content {
+  transform: scale(1.6);
+}
+
+.preview > .overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding-top: 2vmin;
+  top: 0;
+  left: 0;
+  color: var(--primary-color);
+  text-align: center;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.preview:hover > .overlay {
+  background: rgba(1, 1, 1, .8);
+  opacity: 1;
+}
